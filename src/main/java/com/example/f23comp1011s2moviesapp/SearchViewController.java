@@ -11,6 +11,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SearchViewController {
 
@@ -35,20 +40,47 @@ public class SearchViewController {
     @FXML
     private VBox selectedVBox;
 
+    private ArrayList<LocalDateTime> apiCallTimes;
+
     @FXML
     private void initialize()
     {
+        apiCallTimes = new ArrayList<>();
         progressBar.setVisible(false);
     }
 
     @FXML
     void searchOMBD(ActionEvent event) throws IOException, InterruptedException {
         String movieName = searchTextField.getText();
+        clearOldTimeStamps();
+        msgLabel.setText("");
         if (!movieName.trim().isEmpty())
         {
-            APIResponse apiResponse = APIUtility.searchMovies(movieName.trim());
-            listView.getItems().clear();
-            listView.getItems().addAll(apiResponse.getMovies());
+            apiCallTimes.add(LocalDateTime.now());
+            if (apiCallTimes.size()<5) {
+                APIResponse apiResponse = APIUtility.searchMovies(movieName.trim());
+                listView.getItems().clear();
+                listView.getItems().addAll(apiResponse.getMovies());
+            }
+            else
+            {
+                msgLabel.setText("Too many call attempts, wait a minute");
+            }
         }
+        else
+        {
+            msgLabel.setText("Enter a movie title in the search field");
+        }
+    }
+
+    //Duration.between(timeStamp.toLocalTime(), LocalDateTime.now()).toSeconds()>60)
+    private void clearOldTimeStamps()
+    {
+        List<LocalDateTime> validTimes = (apiCallTimes.stream()
+                .filter(timeStamp -> Duration.between(timeStamp,LocalDateTime.now()).toSeconds()<60)
+                .collect(Collectors.toList()));
+
+        apiCallTimes.clear();
+        apiCallTimes.addAll(validTimes);
     }
 }
