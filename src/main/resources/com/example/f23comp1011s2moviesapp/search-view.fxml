@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.f23comp1011s2movies.HelloController">
+<AnchorPane prefHeight="1000.0" prefWidth="900.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.f23comp1011s2moviesapp.SearchViewController">
    <children>
       <VBox alignment="BOTTOM_CENTER" prefHeight="1000.0" prefWidth="735.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -27,7 +27,7 @@
             </HBox>
             <HBox fx:id="resultsBox" alignment="CENTER" spacing="20.0">
                <children>
-                  <ListView fx:id="listView" prefHeight="500.0" prefWidth="450.0">
+                  <ListView fx:id="listView" prefHeight="450.0" prefWidth="450.0">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding></ListView>
