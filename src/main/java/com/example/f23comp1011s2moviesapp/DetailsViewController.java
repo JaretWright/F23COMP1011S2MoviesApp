@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
-public class DetailsViewController {
+public class DetailsViewController implements MovieDetails {
 
     @FXML
     private ListView<?> actorsListView;

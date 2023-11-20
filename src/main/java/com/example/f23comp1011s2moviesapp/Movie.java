@@ -2,7 +2,7 @@ package com.example.f23comp1011s2moviesapp;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Movie {
+public class Movie{
     @SerializedName("Title")
     private String title;
 
