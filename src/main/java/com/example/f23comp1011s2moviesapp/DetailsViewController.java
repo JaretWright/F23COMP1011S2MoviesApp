@@ -1,6 +1,5 @@
 package com.example.f23comp1011s2moviesapp;
 
-import com.example.f23comp1011s2moviesapp.SceneChanger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -9,7 +8,7 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
-public class DetailsViewController implements MovieDetails {
+public class DetailsViewController implements LoadMovie {
 
     @FXML
     private ListView<?> actorsListView;

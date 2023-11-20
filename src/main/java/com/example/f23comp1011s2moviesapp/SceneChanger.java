@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class SceneChanger {
         Scene scene = new Scene(fxmlLoader.load());
 
         //get the controller class and call the loadMovie method
-        MovieDetails controller = fxmlLoader.getController();
+        LoadMovie controller = fxmlLoader.getController();
         controller.loadMovie(imdbID);
 
         stage.setScene(scene);
