@@ -44,6 +44,9 @@ public class SearchViewController {
     @FXML
     private VBox selectedVBox;
 
+    @FXML
+    private VBox searchResultsVBox;
+
     private ArrayList<LocalDateTime> apiCallTimes;
 
     @FXML
@@ -54,6 +57,7 @@ public class SearchViewController {
         selectedVBox.setVisible(false);
         msgLabel.setVisible(false);
         infoLabel.setVisible(false);
+        searchResultsVBox.setVisible(false);
 
         //configure the listview with a listener so that when a movie is selected, it will
         //display the poster art
@@ -88,10 +92,22 @@ public class SearchViewController {
             apiCallTimes.add(LocalDateTime.now());
             if (apiCallTimes.size()<20) {
                 APIResponse apiResponse = APIUtility.searchMovies(movieName.trim());
-                listView.getItems().clear();
-                listView.getItems().addAll(apiResponse.getMovies());
-                infoLabel.setVisible(true);
-                infoLabel.setText("Showing " + apiResponse.getMovies().size() + " of " + apiResponse.getTotalResults() + " results");
+                if (apiResponse!=null)
+                {
+                    searchResultsVBox.setVisible(true);
+                    listView.getItems().clear();
+                    infoLabel.setVisible(true);
+                    if (apiResponse.getMovies() != null)
+                    {
+                        listView.getItems().addAll(apiResponse.getMovies());
+                        infoLabel.setText("Showing " + apiResponse.getMovies().size() + " of " + apiResponse.getTotalResults() + " results");
+                    }
+                    else
+                    {
+                        infoLabel.setText("No movies with that title were found");
+                    }
+                }
+                msgLabel.setText("Movie Database service did not respond");
             }
             else
             {
