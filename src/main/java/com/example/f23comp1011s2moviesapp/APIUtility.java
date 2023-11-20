@@ -44,6 +44,28 @@ public class APIUtility {
 
     }
 
+    public static MovieDetails getMovieDetails(String imdbID) throws IOException, InterruptedException {
+        //use the replaceAll method to replace a space with %20
+        imdbID = imdbID.trim().replaceAll(" ","%20");
+
+        String uri = "http://www.omdbapi.com/?apikey=4a1010ab&i="+imdbID;
+
+        //configure the environment to make a HTTP request (this includes an update to
+        //the module-info.java file
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(uri)).build();
+
+        //this will save the json response to a file call movies.json
+        //this will save the json response to a HttpResponse object
+        HttpResponse<String> response = client.send(httpRequest,
+                HttpResponse.BodyHandlers.ofString());
+
+        System.out.println(response.body());
+        //Update the pom.xml file for GSON and update module-info.java to work with GSON
+        Gson gson = new Gson();
+        return gson.fromJson(response.body(), MovieDetails.class);
+    }
+
     /**
      * This method will read from "movies.json" and create an APIResponse object
      */

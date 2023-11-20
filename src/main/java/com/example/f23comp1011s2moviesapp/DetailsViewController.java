@@ -46,8 +46,15 @@ public class DetailsViewController implements LoadMovie {
      * This method will receive the imdbID and send it to the API, collect movie details
      * and populate the scene
      */
-    public void loadMovie(String imdbID)
-    {
+    public void loadMovie(String imdbID)  {
         System.out.println("inside of loadMovie(), imdbID = " + imdbID);
+        try {
+            MovieDetails movieDetails = APIUtility.getMovieDetails(imdbID);
+            titleLabel.setText(movieDetails.getTitle());
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 }

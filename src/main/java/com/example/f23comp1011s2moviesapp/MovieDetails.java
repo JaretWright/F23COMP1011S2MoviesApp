@@ -38,6 +38,41 @@ public class MovieDetails {
     @SerializedName("Writer")
     private String writer;
 
+    public String getActors() {
+        return actors;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public String getRated() {
+        return rated;
+    }
+
+    public ArrayList<Rating> getRatings() {
+        return ratings;
+    }
+
+    public String getRuntime() {
+        return runtime;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
 
     /**
      * This takes the list of Actor/Actress names and returns them as a List of String
