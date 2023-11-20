@@ -133,4 +133,16 @@ public class SearchViewController {
         apiCallTimes.clear();
         apiCallTimes.addAll(validTimes);
     }
+
+    /**
+     * This method will take the currently selected movie and pass the imdbID into
+     * the details view.  It will also change the scene
+     */
+    @FXML
+    private void detailsView(ActionEvent event) throws IOException {
+        //get a selected item out of the listview
+        Movie movieSelected = listView.getSelectionModel()
+                                        .selectedItemProperty().getValue();
+        SceneChanger.changeScenes(event, "details-view.fxml",movieSelected.getImdbID());
+    }
 }

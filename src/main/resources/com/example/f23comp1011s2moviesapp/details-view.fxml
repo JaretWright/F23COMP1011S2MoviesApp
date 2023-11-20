@@ -12,15 +12,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.f23comp1011s2moviesapp.DetailsViewController" >
+<AnchorPane prefHeight="1000.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.f23comp1011s2moviesapp.DetailsViewController">
     <children>
         <HBox prefHeight="1000.0" prefWidth="800.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="350.0">
             <children>
                 <VBox alignment="CENTER" spacing="10.0">
                     <children>
                         <ImageView fx:id="imageView" fitHeight="500.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button mnemonicParsing="false"  text="Return to Search " />
+                        <Button mnemonicParsing="false" onAction="#returnToSearch" text="Return to Search " />
                     </children>
                 </VBox>
                 <GridPane id="gridPane" minWidth="600.0">
@@ -64,4 +63,3 @@
         </HBox>
     </children>
 </AnchorPane>
-
