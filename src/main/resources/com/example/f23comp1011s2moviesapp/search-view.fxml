@@ -27,10 +27,16 @@
             </HBox>
             <HBox fx:id="resultsBox" alignment="CENTER" spacing="20.0">
                <children>
-                  <ListView fx:id="listView" prefHeight="450.0" prefWidth="450.0">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding></ListView>
+                  <VBox id="titlesListView">
+                     <children>
+                        <ListView fx:id="listView" prefHeight="420.0" prefWidth="450.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </ListView>
+                        <Label fx:id="infoLabel" text="Label" />
+                     </children>
+                  </VBox>
                   <VBox fx:id="selectedVBox" alignment="CENTER">
                      <children>
                         <ImageView fx:id="posterImageView" fitHeight="400.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />

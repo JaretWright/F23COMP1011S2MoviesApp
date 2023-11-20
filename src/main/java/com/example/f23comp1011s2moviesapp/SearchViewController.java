@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,6 +25,9 @@ public class SearchViewController {
 
     @FXML
     private Label msgLabel;
+
+    @FXML
+    private Label infoLabel;
 
     @FXML
     private ImageView posterImageView;
@@ -47,28 +51,58 @@ public class SearchViewController {
     {
         apiCallTimes = new ArrayList<>();
         progressBar.setVisible(false);
+        selectedVBox.setVisible(false);
+        msgLabel.setVisible(false);
+        infoLabel.setVisible(false);
+
+        //configure the listview with a listener so that when a movie is selected, it will
+        //display the poster art
+        listView.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((obs, oldValue, movieSelected)->{
+                    if (movieSelected != null)
+                    {
+                        selectedVBox.setVisible(true);
+                        try {
+                            posterImageView.setImage(new Image(movieSelected.getPoster()));
+                        }catch (IllegalArgumentException e)
+                        {
+                            posterImageView.setImage(new Image(Main.class
+                                                .getResourceAsStream("images/default_poster.png")));
+                        }
+                    }
+                    else
+                    {
+                        selectedVBox.setVisible(false);
+                    }
+                });
     }
 
     @FXML
     void searchOMBD(ActionEvent event) throws IOException, InterruptedException {
         String movieName = searchTextField.getText();
         clearOldTimeStamps();
-        msgLabel.setText("");
+        msgLabel.setVisible(false);
         if (!movieName.trim().isEmpty())
         {
             apiCallTimes.add(LocalDateTime.now());
-            if (apiCallTimes.size()<5) {
+            if (apiCallTimes.size()<20) {
                 APIResponse apiResponse = APIUtility.searchMovies(movieName.trim());
                 listView.getItems().clear();
                 listView.getItems().addAll(apiResponse.getMovies());
+                infoLabel.setVisible(true);
+                infoLabel.setText("Showing " + apiResponse.getMovies().size() + " of " + apiResponse.getTotalResults() + " results");
             }
             else
             {
+                infoLabel.setVisible(false);
+                msgLabel.setVisible(true);
                 msgLabel.setText("Too many call attempts, wait a minute");
             }
         }
         else
         {
+            msgLabel.setVisible(true);
             msgLabel.setText("Enter a movie title in the search field");
         }
     }

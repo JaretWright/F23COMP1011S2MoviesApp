@@ -1,6 +1,6 @@
 .root{
     -fx-font: bold italic 20pt "Arial";
-    -fx-background-image: url("images/background.png");
+    -fx-background-image: url("images/background2.png");
     -fx-background-size: cover;
     -fx-text-fill: #e0820f;
 }
@@ -35,5 +35,11 @@
 }
 
 .text-field{
+    -fx-background-radius: 20px;
+}
+
+#titlesListView{
+    -fx-padding: 10px;
+    -fx-background-color: #140d09;
     -fx-background-radius: 20px;
 }

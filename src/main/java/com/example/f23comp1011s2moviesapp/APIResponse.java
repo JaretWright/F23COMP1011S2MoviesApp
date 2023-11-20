@@ -2,17 +2,19 @@ package com.example.f23comp1011s2moviesapp;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class APIResponse {
 
     @SerializedName("Search")
-    private Movie[] movies;
+    private ArrayList<Movie> movies;
 
     private String totalResults;
 
-//    @SerializedName("Response")
-//    private String response;
+    @SerializedName("Response")
+    private String response;
 
-    public Movie[] getMovies() {
+    public ArrayList<Movie> getMovies() {
         return movies;
     }
 
@@ -20,7 +22,7 @@ public class APIResponse {
         return totalResults;
     }
 
-//    public String getResponse() {
-//        return response;
-//    }
+    public String getResponse() {
+        return response;
+    }
 }
