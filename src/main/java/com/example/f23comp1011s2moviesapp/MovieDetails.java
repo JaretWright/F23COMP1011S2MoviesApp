@@ -78,7 +78,7 @@ public class MovieDetails {
      * This takes the list of Actor/Actress names and returns them as a List of String
      * @return
      */
-    private List<String> getActorList()
+    public List<String> getActorList()
     {
         return Arrays.asList(actors.split(", "));
     }
