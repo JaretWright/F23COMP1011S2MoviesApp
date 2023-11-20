@@ -47,7 +47,7 @@ public class APIUtility {
     /**
      * This method will read from "movies.json" and create an APIResponse object
      */
-    public static APIResponse getMoviesFromFile()
+    public static APIResponse getMoviesFromFile(String fileName)
     {
         //Create a GSON object.  GSON is the Google library that can read and write
         //JSON
@@ -60,7 +60,7 @@ public class APIUtility {
         //open the file and pass it into the the Gson object to covert JSON objects
         //to Java objects
         try(
-                FileReader fileReader = new FileReader("movies.json");
+                FileReader fileReader = new FileReader(fileName);
                 JsonReader jsonReader = new JsonReader(fileReader);
         )
         {
@@ -71,5 +71,31 @@ public class APIUtility {
             e.printStackTrace();
         }
         return apiResponse;
+    }
+
+    public static Movie[] getMovieArrayFromFile(String fileName)
+    {
+        //Create a GSON object.  GSON is the Google library that can read and write
+        //JSON
+        //in order to use this library, we need to update the pom.xml and module-info.java
+        //files.  Don't forget to reload the Maven dependencies
+        Gson gson = new Gson();
+
+        APIResponse apiResponse = null;
+
+        //open the file and pass it into the the Gson object to covert JSON objects
+        //to Java objects
+        try(
+                FileReader fileReader = new FileReader(fileName);
+                JsonReader jsonReader = new JsonReader(fileReader);
+        )
+        {
+            return gson.fromJson(jsonReader, Movie[].class);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
