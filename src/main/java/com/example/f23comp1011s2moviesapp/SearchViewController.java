@@ -2,10 +2,7 @@ package com.example.f23comp1011s2moviesapp;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -19,6 +16,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SearchViewController {
+
+
+    @FXML
+    private Button fetchAllButton;
 
     @FXML
     private ListView<Movie> listView;
@@ -49,6 +50,7 @@ public class SearchViewController {
 
     private ArrayList<LocalDateTime> apiCallTimes;
 
+    private int totalNumOfMovies;
     @FXML
     private void initialize()
     {
@@ -94,13 +96,14 @@ public class SearchViewController {
                 APIResponse apiResponse = APIUtility.searchMovies(movieName.trim());
                 if (apiResponse!=null)
                 {
+                    totalNumOfMovies = Integer.parseInt(apiResponse.getTotalResults());
                     searchResultsVBox.setVisible(true);
                     listView.getItems().clear();
                     infoLabel.setVisible(true);
                     if (apiResponse.getMovies() != null)
                     {
                         listView.getItems().addAll(apiResponse.getMovies());
-                        infoLabel.setText("Showing " + apiResponse.getMovies().size() + " of " + apiResponse.getTotalResults() + " results");
+                        updateLabels();
                     }
                     else
                     {
@@ -144,5 +147,19 @@ public class SearchViewController {
         Movie movieSelected = listView.getSelectionModel()
                                         .selectedItemProperty().getValue();
         SceneChanger.changeScenes(event, "details-view.fxml",movieSelected.getImdbID());
+    }
+
+    @FXML
+    void fetchAllMovies(ActionEvent event) {
+
+    }
+
+    private void updateLabels()
+    {
+        infoLabel.setText("Showing " + listView.getItems().size() + " of " + totalNumOfMovies);
+        if (listView.getItems().size()<totalNumOfMovies)
+            fetchAllButton.setVisible(true);
+        else
+            fetchAllButton.setVisible(false);
     }
 }
