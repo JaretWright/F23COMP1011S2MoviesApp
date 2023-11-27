@@ -1,5 +1,6 @@
 package com.example.f23comp1011s2moviesapp;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -151,16 +152,28 @@ public class SearchViewController {
     }
 
     @FXML
-    void fetchAllMovies() throws IOException, InterruptedException {
-        page++;
-        APIResponse apiResponse = APIUtility.searchMovies(searchTextField.getText().trim(), page);
-        listView.getItems().addAll(apiResponse.getMovies());
+    void fetchAllMovies()  {
 
-        //check if all the movies are loaded, if not call the method again
-        //this is a recursive call
-        if (listView.getItems().size()<totalNumOfMovies)
-            fetchAllMovies();
-        updateLabels();
+        Thread fetchThread = new Thread(()->{
+            try {
+                page++;
+                APIResponse apiResponse = APIUtility.searchMovies(searchTextField.getText().trim(), page);
+
+                //check if all the movies are loaded, if not call the method again
+                //this is a recursive call
+                Platform.runLater(() -> {
+                    listView.getItems().addAll(apiResponse.getMovies());
+                    if (listView.getItems().size() < totalNumOfMovies)
+                        fetchAllMovies();
+                    updateLabels();
+                });
+            } catch( InterruptedException | IOException e)
+            {
+                e.printStackTrace();
+            }
+        });
+        fetchThread.start();
+
     }
 
     private void updateLabels()
