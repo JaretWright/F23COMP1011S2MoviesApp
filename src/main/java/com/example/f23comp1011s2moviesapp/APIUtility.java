@@ -18,11 +18,11 @@ public class APIUtility {
      * This method will call the OMDB API and save the result in a file called
      * movies.json
      */
-    public static APIResponse searchMovies(String movieName) throws IOException, InterruptedException {
+    public static APIResponse searchMovies(String movieName, int page) throws IOException, InterruptedException {
         //use the replaceAll method to replace a space with %20
         movieName = movieName.replaceAll(" ","%20");
 
-        String uri = "http://www.omdbapi.com/?apikey=4a1010ab&s="+movieName;
+        String uri = "http://www.omdbapi.com/?apikey=4a1010ab&s="+movieName+"&page="+page;
 
         //configure the environment to make a HTTP request (this includes an update to
         //the module-info.java file

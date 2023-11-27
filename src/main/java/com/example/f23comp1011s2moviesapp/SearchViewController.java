@@ -50,7 +50,7 @@ public class SearchViewController {
 
     private ArrayList<LocalDateTime> apiCallTimes;
 
-    private int totalNumOfMovies;
+    private int totalNumOfMovies, page;
     @FXML
     private void initialize()
     {
@@ -88,12 +88,13 @@ public class SearchViewController {
     void searchOMBD(ActionEvent event) throws IOException, InterruptedException {
         String movieName = searchTextField.getText();
         clearOldTimeStamps();
+        page=1;
         msgLabel.setVisible(false);
         if (!movieName.trim().isEmpty())
         {
             apiCallTimes.add(LocalDateTime.now());
             if (apiCallTimes.size()<20) {
-                APIResponse apiResponse = APIUtility.searchMovies(movieName.trim());
+                APIResponse apiResponse = APIUtility.searchMovies(movieName.trim(), page);
                 if (apiResponse!=null)
                 {
                     totalNumOfMovies = Integer.parseInt(apiResponse.getTotalResults());
@@ -150,8 +151,16 @@ public class SearchViewController {
     }
 
     @FXML
-    void fetchAllMovies(ActionEvent event) {
+    void fetchAllMovies() throws IOException, InterruptedException {
+        page++;
+        APIResponse apiResponse = APIUtility.searchMovies(searchTextField.getText().trim(), page);
+        listView.getItems().addAll(apiResponse.getMovies());
 
+        //check if all the movies are loaded, if not call the method again
+        //this is a recursive call
+        if (listView.getItems().size()<totalNumOfMovies)
+            fetchAllMovies();
+        updateLabels();
     }
 
     private void updateLabels()
