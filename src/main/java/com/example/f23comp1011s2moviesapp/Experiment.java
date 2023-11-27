@@ -11,14 +11,16 @@ public class Experiment {
 //       APIResponse apiResponse = APIUtility.getMoviesFromFile("movies.json");
 //       Movie[] movies = APIUtility.getMovieArrayFromFile("moviesArray.json");
 //       System.out.println(apiResponse);
+//
+//        try {
+//            MovieDetails movieDetails = APIUtility.getMovieDetails("tt0116483");
+//            System.out.println(movieDetails);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 
-        try {
-            MovieDetails movieDetails = APIUtility.getMovieDetails("tt0116483");
-            System.out.println(movieDetails);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println((double)30/127);
     }
 }

@@ -153,19 +153,25 @@ public class SearchViewController {
 
     @FXML
     void fetchAllMovies()  {
-
+        progressBar.setVisible(true);
         Thread fetchThread = new Thread(()->{
             try {
                 page++;
                 APIResponse apiResponse = APIUtility.searchMovies(searchTextField.getText().trim(), page);
 
+                // cast to be of type double to ensure we can get the fraction
+                double progress = (double)(page*10)/totalNumOfMovies;
+
                 //check if all the movies are loaded, if not call the method again
                 //this is a recursive call
                 //Platform.runLater allows us to access the visual, JavaFX application thread when it is available.
                 Platform.runLater(() -> {
+                    progressBar.setProgress(progress);
                     listView.getItems().addAll(apiResponse.getMovies());
                     if (listView.getItems().size() < totalNumOfMovies)
                         fetchAllMovies();
+                    else
+                        progressBar.setVisible(false);
                     updateLabels();
                 });
             } catch( InterruptedException | IOException e)
