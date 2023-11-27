@@ -161,6 +161,7 @@ public class SearchViewController {
 
                 //check if all the movies are loaded, if not call the method again
                 //this is a recursive call
+                //Platform.runLater allows us to access the visual, JavaFX application thread when it is available.
                 Platform.runLater(() -> {
                     listView.getItems().addAll(apiResponse.getMovies());
                     if (listView.getItems().size() < totalNumOfMovies)
